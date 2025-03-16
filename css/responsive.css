@@ -1,0 +1,23 @@
+/* 响应式样式 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .chat-container {
+        height: 90vh;
+        padding: 15px;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .header h1 {
+        font-size: 1.2em;
+    }
+
+    .settings-content {
+        padding: 20px;
+    }
+}

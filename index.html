@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI对话助手 - DeepSeek</title>
+    <!-- CSS文件 -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Prism主题 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <h1>DeepSeek AI对话助手</h1>
+            <div class="header-buttons">
+                <button id="exportButton" class="action-button" style="color: black;">💾 保存对话</button>
+                <button id="clearButton" class="action-button" style="color: black;">🗑️ 清空对话</button>
+                <button id="settingsButton" class="settings-button" style="color: black;">⚙️ 设置</button>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai-message">您好！我是DeepSeek AI助手，有什么可以帮您的？</div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="输入您的问题...">
+            <button id="sendButton">发送</button>
+        </div>
+    </div>
+
+    <!-- 设置面板 -->
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-content">
+            <h2>DeepSeek API设置</h2>
+            <div class="settings-group">
+                <label for="apiEndpoint">API地址:</label>
+                <input type="text" id="apiEndpoint" placeholder="例如: https://api.deepseek.com/v1/chat/completions" value="https://api.deepseek.com/v1/chat/completions">
+            </div>
+            <div class="settings-group">
+                <label for="apiKey">API密钥:</label>
+                <input type="password" id="apiKey" placeholder="输入DeepSeek API密钥">
+            </div>
+            <div class="settings-group">
+                <label for="modelName">模型名称:</label>
+                <select id="modelName">
+                    <option value="deepseek-chat">deepseek-v3</option>
+                    <option value="deepseek-reasoner">deepseek-r1</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <label for="temperature">温度 (0-1):</label>
+                <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.7">
+                <span id="temperatureValue">0.7</span>
+            </div>
+            <div class="settings-group">
+                <label for="max_tokens">最大输出长度:</label>
+                <input type="number" id="maxTokens" value="4096" min="1" max="8192">
+            </div>
+            <div class="settings-group">
+                <label for="contextLength">上下文长度:</label>
+                <input type="number" id="contextLength" value="10" min="1" max="50">
+            </div>
+            <div class="button-group">
+                <button id="saveSettings">保存设置</button>
+                <button id="closeSettings">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 依赖库 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+    
+    <!-- 应用代码 -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
