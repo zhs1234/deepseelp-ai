@@ -1,23 +1,225 @@
 /* 响应式样式 */
+
+/* 平板设备 (768px 及以下) */
 @media (max-width: 768px) {
     body {
         padding: 10px;
     }
 
     .chat-container {
-        height: 90vh;
-        padding: 15px;
-    }
-
-    .message {
-        max-width: 90%;
+        height: 92vh;
+        padding: 16px;
+        border-radius: 15px;
     }
 
     .header h1 {
         font-size: 1.2em;
     }
 
+    .header-buttons {
+        gap: 8px;
+    }
+
+    .action-button, .settings-button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .message {
+        max-width: 90%;
+        padding: 10px 14px;
+    }
+
     .settings-content {
         padding: 20px;
+        width: 95%;
+    }
+
+    .code-block {
+        margin: 10px 0;
+    }
+
+    .code-block pre {
+        padding: 12px;
+        font-size: 13px;
+    }
+}
+
+/* 手机设备 (480px 及以下) */
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    .chat-container {
+        height: 95vh;
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+
+    .header-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .action-button, .settings-button {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .chat-messages {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .input-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .input-wrapper {
+        width: 100%;
+    }
+
+    #sendButton {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .settings-content {
+        padding: 15px;
+    }
+
+    .settings-group {
+        margin-bottom: 15px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group button {
+        width: 100%;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) {
+    button:hover {
+        transform: none !important;
+    }
+
+    .action-button:hover, 
+    .settings-button:hover {
+        background-color: initial;
+        transform: none;
+    }
+
+    .copy-button:hover {
+        background: #3d3d3d;
+        transform: none;
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 500px) and (orientation: landscape) {
+    .chat-container {
+        height: auto;
+        min-height: 85vh;
+    }
+
+    .header {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .chat-messages {
+        max-height: 50vh;
+    }
+
+    .settings-panel .settings-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (min-width: 1440px) {
+    body {
+        max-width: 1000px;
+    }
+
+    .chat-container {
+        padding: 30px;
+    }
+
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .message {
+        font-size: 16px;
+    }
+
+    .code-block code {
+        font-size: 15px;
+    }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --border-color: #333;
+    }
+
+    .chat-container {
+        background-color: #242424;
+        border-color: #333;
+    }
+
+    .message.ai-message {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    .action-button, 
+    .settings-button {
+        background: #2d2d2d;
+        border-color: #404040;
+        color: #e0e0e0;
+    }
+
+    .settings-content {
+        background-color: #242424;
+        color: #e0e0e0;
+    }
+
+    input, select {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+        border-color: #404040;
+    }
+
+    input::placeholder {
+        color: #888;
+    }
+}
+
+/* 减少动画效果 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
