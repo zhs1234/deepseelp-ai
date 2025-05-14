@@ -15,6 +15,32 @@
     --transition-time: 0.3s;
 }
 
+/* 暗黑模式 */
+[data-theme="dark"] {
+    --primary-color: #1890ff;
+    --hover-color: #40a9ff;
+    --disabled-color: #003a8c;
+    --text-color: #f0f0f0;
+    --border-color: #444;
+    --bg-color: #1a1a1a;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+[data-theme="dark"] ::selection {
+    background: rgba(24, 144, 255, 0.3);
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     max-width: 800px;

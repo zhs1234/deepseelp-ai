@@ -1,3 +1,57 @@
+/* 设置页面暗黑模式样式 */
+[data-theme="dark"] .settings-form {
+    background-color: var(--bg-color);
+}
+
+[data-theme="dark"] .settings-group {
+    background-color: #2d2d2d;
+    border-color: #444;
+}
+
+[data-theme="dark"] .input-container input,
+[data-theme="dark"] .input-container select,
+[data-theme="dark"] .input-container textarea {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] input[type="range"] {
+    background: #444;
+}
+
+[data-theme="dark"] .form-help {
+    color: #aaa;
+}
+
+[data-theme="dark"] .input-container.invalid input,
+[data-theme="dark"] .input-container.invalid select,
+[data-theme="dark"] .input-container.invalid textarea {
+    background-color: #3a1a1a;
+    border-color: #ff6666;
+}
+
+[data-theme="dark"] .validation-message {
+    color: #ff6666;
+}
+
+[data-theme="dark"] .range-value {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .settings-group label {
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .settings-section {
+    background-color: #2d2d2d;
+    border-color: #444;
+}
+
+[data-theme="dark"] .settings-section legend {
+    color: var(--primary-color);
+}
+
 /* 
  * 版权所有 © 2025 XGOUO.CN
  * 保留所有权利
@@ -167,6 +221,31 @@
     color: #1890ff;
 }
 
+/* 表单验证状态 */
+.input-container.invalid input,
+.input-container.invalid select,
+.input-container.invalid textarea {
+    border-color: #ff4444;
+    background-color: #fff9f9;
+}
+
+.input-container.valid input,
+.input-container.valid select,
+.input-container.valid textarea {
+    border-color: #4caf50;
+}
+
+.validation-message {
+    display: none;
+    color: #ff4444;
+    font-size: 0.8em;
+    margin-top: 4px;
+}
+
+.input-container.invalid .validation-message {
+    display: block;
+}
+
 /* 表单帮助文本 */
 .form-help {
     display: block;
@@ -180,6 +259,38 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    flex: 1;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.range-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--primary-color);
 }
 
 /* AI面具样式 */
