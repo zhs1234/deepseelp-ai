@@ -43,93 +43,91 @@
 
         <!-- 设置内容主区域 - 使用与聊天页面相同的容器类名 -->
         <div class="chat-container" role="main">
-            <div class="chat-container">
-                <h1>DeepSeek API设置</h1>
-                <div id="settingsStatus" class="settings-status" aria-live="polite"></div>
-                <form id="settingsForm">
-                    <fieldset class="message">
-                        <legend>API配置</legend>
-                        <div class="input-container">
-                            <label for="apiEndpoint">API地址</label>
-                            <input type="url" 
-                                   id="apiEndpoint" 
-                                   placeholder="例如: https://api.deepseek.com/v1/chat/completions" 
-                                   value="https://api.deepseek.com/v1/chat/completions"
-                                   required
-                                   aria-describedby="apiEndpointHelp">
-                            <small id="apiEndpointHelp" class="form-help">请输入完整的API端点URL</small>
-                        </div>
-                        <div class="input-container">
-                            <label for="apiKey">API密钥</label>
-                            <input type="password" 
-                                   id="apiKey" 
-                                   placeholder="输入DeepSeek API密钥"
-                                   required
-                                   autocomplete="current-password"
-                                   aria-describedby="apiKeyHelp">
-                            <small id="apiKeyHelp" class="form-help">可在DeepSeek控制台获取API密钥</small>
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="message">
-                        <legend>模型参数</legend>
-                        <div class="input-container">
-                            <label for="modelName">模型名称</label>
-                            <select id="modelName" required aria-describedby="modelNameHelp">
-                                <option value="deepseek-chat">deepseek-v3</option>
-                                <option value="deepseek-reasoner">deepseek-r1</option>
-                            </select>
-                            <small id="modelNameHelp" class="form-help">选择适合您任务的模型</small>
-                        </div>
-                        <div class="input-container">
-                            <label for="temperature">温度 (0-1)</label>
-                            <div class="range-container">
-                                <span class="range-min">0</span>
-                                <input type="range" 
-                                       id="temperature" 
-                                       min="0" 
-                                       max="1" 
-                                       step="0.1" 
-                                       value="0.7"
-                                       aria-valuemin="0"
-                                       aria-valuemax="1"
-                                       aria-valuenow="0.7"
-                                       aria-describedby="temperatureHelp">
-                                <span id="temperatureValue">0.7</span>
-                                <span class="range-max">1</span>
-                            </div>
-                            <small id="temperatureHelp" class="form-help">控制输出的随机性，值越高越有创意</small>
-                        </div>
-                        <div class="input-container">
-                            <label for="maxTokens">最大输出长度</label>
-                            <input type="number" 
-                                   id="maxTokens" 
-                                   value="4096" 
-                                   min="1" 
-                                   max="8192"
-                                   required
-                                   aria-describedby="maxTokensHelp">
-                            <small id="maxTokensHelp" class="form-help">限制AI生成的最大token数量</small>
-                        </div>
-                        <div class="input-container">
-                            <label for="contextLength">上下文长度</label>
-                            <input type="number" 
-                                   id="contextLength" 
-                                   value="10" 
-                                   min="1" 
-                                   max="50"
-                                   required
-                                   aria-describedby="contextLengthHelp">
-                            <small id="contextLengthHelp" class="form-help">保留的对话轮次数量</small>
-                        </div>
-                    </fieldset>
-
-                    <div class="button-group">
-                        <button type="submit" id="saveSettings" class="action-button">保存设置</button>
-                        <button type="button" id="resetSettings" class="action-button secondary">重置默认值</button>
+            <h1>DeepSeek API设置</h1>
+            <div id="settingsStatus" class="settings-status" aria-live="polite"></div>
+            <form id="settingsForm">
+                <fieldset class="message">
+                    <legend>API配置</legend>
+                    <div class="input-container">
+                        <label for="apiEndpoint">API地址</label>
+                        <input type="url" 
+                               id="apiEndpoint" 
+                               placeholder="例如: https://api.deepseek.com/v1/chat/completions" 
+                               value="https://api.deepseek.com/v1/chat/completions"
+                               required
+                               aria-describedby="apiEndpointHelp">
+                        <small id="apiEndpointHelp" class="form-help">请输入完整的API端点URL</small>
                     </div>
-                </form>
-            </div>
+                    <div class="input-container">
+                        <label for="apiKey">API密钥</label>
+                        <input type="password" 
+                               id="apiKey" 
+                               placeholder="输入DeepSeek API密钥"
+                               required
+                               autocomplete="current-password"
+                               aria-describedby="apiKeyHelp">
+                        <small id="apiKeyHelp" class="form-help">可在DeepSeek控制台获取API密钥</small>
+                    </div>
+                </fieldset>
+
+                <fieldset class="message">
+                    <legend>模型参数</legend>
+                    <div class="input-container">
+                        <label for="modelName">模型名称</label>
+                        <select id="modelName" required aria-describedby="modelNameHelp">
+                            <option value="deepseek-chat">deepseek-v3</option>
+                            <option value="deepseek-reasoner">deepseek-r1</option>
+                        </select>
+                        <small id="modelNameHelp" class="form-help">选择适合您任务的模型</small>
+                    </div>
+                    <div class="input-container">
+                        <label for="temperature">温度 (0-1)</label>
+                        <div class="range-container">
+                            <span class="range-min">0</span>
+                            <input type="range" 
+                                   id="temperature" 
+                                   min="0" 
+                                   max="1" 
+                                   step="0.1" 
+                                   value="0.7"
+                                   aria-valuemin="0"
+                                   aria-valuemax="1"
+                                   aria-valuenow="0.7"
+                                   aria-describedby="temperatureHelp">
+                            <span id="temperatureValue">0.7</span>
+                            <span class="range-max">1</span>
+                        </div>
+                        <small id="temperatureHelp" class="form-help">控制输出的随机性，值越高越有创意</small>
+                    </div>
+                    <div class="input-container">
+                        <label for="maxTokens">最大输出长度</label>
+                        <input type="number" 
+                               id="maxTokens" 
+                               value="4096" 
+                               min="1" 
+                               max="8192"
+                               required
+                               aria-describedby="maxTokensHelp">
+                        <small id="maxTokensHelp" class="form-help">限制AI生成的最大token数量</small>
+                    </div>
+                    <div class="input-container">
+                        <label for="contextLength">上下文长度</label>
+                        <input type="number" 
+                               id="contextLength" 
+                               value="10" 
+                               min="1" 
+                               max="50"
+                               required
+                               aria-describedby="contextLengthHelp">
+                        <small id="contextLengthHelp" class="form-help">保留的对话轮次数量</small>
+                    </div>
+                </fieldset>
+
+                <div class="button-group">
+                    <button type="submit" id="saveSettings" class="action-button">保存设置</button>
+                    <button type="button" id="resetSettings" class="action-button secondary">重置默认值</button>
+                </div>
+            </form>
         </div>
 
         <!-- 依赖脚本 -->
