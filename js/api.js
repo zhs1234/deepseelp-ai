@@ -3,6 +3,43 @@ import { state } from './state.js';
 import { addMessage } from './dom.js';
 
 /**
+ * 获取错误消息
+ * @param {Error} error 错误对象
+ * @returns {string} 用户友好的错误消息
+ */
+const getErrorMessage = (error) => {
+    const errorMessages = {
+        [ErrorType.AUTH_ERROR]: 'API密钥无效，请检查设置。',
+        [ErrorType.NETWORK_ERROR]: '网络连接失败，请检查网络。',
+        [ErrorType.API_ERROR]: 'API服务器错误，请稍后重试。',
+        [ErrorType.INVALID_RESPONSE]: 'API响应无效，未返回有效结果。'
+    };
+    
+    return errorMessages[error.message] || '抱歉，发生了错误，请稍后重试。';
+};
+
+/**
+ * 处理API错误
+ * @param {Error} error 错误对象
+ * @param {HTMLElement} loadingMessage 加载消息元素
+ */
+const handleApiError = (error) => {
+    console.error('API Error:', error);
+    state.setError(error.message);
+    
+    // 移除加载消息
+    const loadingMessages = document.querySelectorAll('.ai-message');
+    const lastLoadingMessage = loadingMessages[loadingMessages.length - 1];
+    if (lastLoadingMessage && lastLoadingMessage.textContent === '正在思考...') {
+        lastLoadingMessage.remove();
+    }
+    
+    // 显示错误消息
+    const errorMessage = getErrorMessage(error);
+    addMessage(errorMessage, MessageType.AI);
+};
+
+/**
  * 发送消息到API
  * @param {string} message 用户消息内容
  */
@@ -32,18 +69,18 @@ export const sendMessage = async (message) => {
         });
 
         if (!response.ok) {
-            throw new Error(
+            const errorType = 
                 response.status === 401 ? ErrorType.AUTH_ERROR :
                 response.status === 0 ? ErrorType.NETWORK_ERROR :
-                ErrorType.API_ERROR
-            );
+                ErrorType.API_ERROR;
+            throw new Error(errorType);
         }
 
         const data = await response.json();
         loadingMessage.remove();
 
         if (!data.choices || data.choices.length === 0) {
-            throw new Error('API响应无效，未返回有效结果');
+            throw new Error(ErrorType.INVALID_RESPONSE);
         }
 
         const aiMessage = data.choices[0].message.content;
@@ -51,20 +88,7 @@ export const sendMessage = async (message) => {
         addMessage(aiMessage, MessageType.AI);
 
     } catch (error) {
-        console.error('API Error:', error);
-        state.setError(error.message);
-        
-        const loadingMessages = document.querySelectorAll('.ai-message');
-        const lastLoadingMessage = loadingMessages[loadingMessages.length - 1];
-        if (lastLoadingMessage && lastLoadingMessage.textContent === '正在思考...') {
-            lastLoadingMessage.remove();
-        }
-
-        const errorMessage = error.message === ErrorType.AUTH_ERROR ? 'API密钥无效，请检查设置。' :
-                           error.message === ErrorType.NETWORK_ERROR ? '网络连接失败，请检查网络。' :
-                           '抱歉，发生了错误，请稍后重试。';
-        
-        addMessage(errorMessage, MessageType.AI);
+        handleApiError(error);
     } finally {
         state.setLoading(false);
     }

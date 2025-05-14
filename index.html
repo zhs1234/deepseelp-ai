@@ -15,10 +15,11 @@
     <title>AI对话助手 - DeepSeek</title>
     
     <!-- 预加载关键资源 -->
-    <link rel="preload" href="css/base.css" as="style">
-    <link rel="preload" href="css/layout.css" as="style">
-    <link rel="preload" href="css/components.css" as="style">
-    <link rel="preload" href="css/responsive.css" as="style">
+    <link rel="preload" href="css/base.css" as="style" crossorigin>
+    <link rel="preload" href="css/layout.css" as="style" crossorigin>
+    <link rel="preload" href="css/components.css" as="style" crossorigin>
+    <link rel="preload" href="css/responsive.css" as="style" crossorigin>
+    
     
     <!-- CSS文件 -->
     <link rel="stylesheet" href="css/base.css">
@@ -30,122 +31,130 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
 </head>
 <body>
-    <div class="chat-container" role="main">
-        <header class="header">
-            <h1>DeepSeek AI对话助手</h1>
+    <div class="app-container">
+        <!-- 新增的左侧竖向标题栏 -->
+        <aside class="sidebar">
+            <h2 class="sidebar-title">DeepSeek AI</h2>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-button active">对话助手</a>
+                <a href="knowledge.html" class="nav-button">知识库</a>
+                <a href="settings.html" class="nav-button">设置</a>
+            </nav>
+        </aside>
+
+        <!-- 原有的聊天容器 -->
+        <div class="chat-container" role="main">
+            <header class="header">
+                <h1>DeepSeek AI对话助手</h1>
+            </header>
+
+            <div class="chat-messages" id="chatMessages" role="log" aria-live="polite">
+                <div class="message ai-message" role="article">
+                    您好！我是DeepSeek AI助手，有什么可以帮您的？
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input type="text" 
+                           id="userInput" 
+                           placeholder="输入您的问题..." 
+                           aria-label="聊天输入框"
+                           autocomplete="off"
+                           maxlength="2000">
+                </div>
+                <button id="sendButton" aria-label="发送消息">发送</button>
+            </div>
             <div class="header-buttons" role="toolbar" aria-label="聊天工具栏">
+                <button id="settingsButton" class="action-button" aria-label="打开设置">
+                    <span aria-hidden="true">⚙️</span> 设置
+                </button>
                 <button id="exportButton" class="action-button" aria-label="保存对话">
                     <span aria-hidden="true">💾</span> 保存对话
                 </button>
                 <button id="clearButton" class="action-button" aria-label="清空对话">
                     <span aria-hidden="true">🗑️</span> 清空对话
                 </button>
-                <button id="settingsButton" class="settings-button" aria-label="打开设置">
-                    <span aria-hidden="true">⚙️</span> 设置
-                </button>
-            </div>
-        </header>
-
-        <div class="chat-messages" id="chatMessages" role="log" aria-live="polite">
-            <div class="message ai-message" role="article">
-                您好！我是DeepSeek AI助手，有什么可以帮您的？
             </div>
         </div>
 
-        <div class="input-container">
-            <div class="input-wrapper">
-                <input type="text" 
-                       id="userInput" 
-                       placeholder="输入您的问题..." 
-                       aria-label="聊天输入框"
-                       autocomplete="off"
-                       maxlength="2000">
+        <!-- 右侧设置面板 -->
+        <div class="right-sidebar">
+            <div class="settings-panel" role="complementary" aria-label="设置面板">
+                <div class="settings-header">
+                    <h2>DeepSeek API设置</h2>
+                    <button id="toggleSettings" class="close-button" aria-label="折叠设置面板">×</button>
+                </div>
+                <div class="settings-content">
+                    <form id="settingsForm">
+                        <!-- 保留原有表单内容 -->
+                        <div class="settings-group">
+                            <label for="apiEndpoint">API地址:</label>
+                            <input type="url" 
+                                   id="apiEndpoint" 
+                                   placeholder="例如: https://api.deepseek.com/v1/chat/completions" 
+                                   value="https://api.deepseek.com/v1/chat/completions"
+                                   required>
+                        </div>
+                        <div class="settings-group">
+                            <label for="apiKey">API密钥:</label>
+                            <input type="password" 
+                                   id="apiKey" 
+                                   placeholder="输入DeepSeek API密钥"
+                                   required
+                                   autocomplete="current-password">
+                        </div>
+                        <div class="settings-group">
+                            <label for="modelName">模型名称:</label>
+                            <select id="modelName" required>
+                                <option value="deepseek-chat">deepseek-v3</option>
+                                <option value="deepseek-reasoner">deepseek-r1</option>
+                            </select>
+                        </div>
+                        <div class="settings-group">
+                            <label for="temperature">温度 (0-1):</label>
+                            <input type="range" 
+                                   id="temperature" 
+                                   min="0" 
+                                   max="1" 
+                                   step="0.1" 
+                                   value="0.7"
+                                   aria-valuemin="0"
+                                   aria-valuemax="1"
+                                   aria-valuenow="0.7">
+                            <span id="temperatureValue" aria-hidden="true">0.7</span>
+                        </div>
+                        <div class="settings-group">
+                            <label for="maxTokens">最大输出长度:</label>
+                            <input type="number" 
+                                   id="maxTokens" 
+                                   value="4096" 
+                                   min="1" 
+                                   max="8192"
+                                   required>
+                        </div>
+                        <div class="settings-group">
+                            <label for="contextLength">上下文长度:</label>
+                            <input type="number" 
+                                   id="contextLength" 
+                                   value="10" 
+                                   min="1" 
+                                   max="50"
+                                   required>
+                        </div>
+                        <div class="button-group">
+                            <button type="submit" id="saveSettings">保存设置</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <button id="sendButton" aria-label="发送消息">发送</button>
         </div>
-    </div>
 
-    <!-- 设置面板 -->
-    <div id="settingsPanel" class="settings-panel" role="dialog" aria-label="设置面板" aria-hidden="true">
-        <div class="settings-content">
-            <h2>DeepSeek API设置</h2>
-            <form id="settingsForm">
-                <div class="settings-group">
-                    <label for="apiEndpoint">API地址:</label>
-                    <input type="url" 
-                           id="apiEndpoint" 
-                           placeholder="例如: https://api.deepseek.com/v1/chat/completions" 
-                           value="https://api.deepseek.com/v1/chat/completions"
-                           required>
-                </div>
-                <div class="settings-group">
-                    <label for="apiKey">API密钥:</label>
-                    <input type="password" 
-                           id="apiKey" 
-                           placeholder="输入DeepSeek API密钥"
-                           required
-                           autocomplete="current-password">
-                </div>
-                <div class="settings-group">
-                    <label for="modelName">模型名称:</label>
-                    <select id="modelName" required>
-                        <option value="deepseek-chat">deepseek-v3</option>
-                        <option value="deepseek-reasoner">deepseek-r1</option>
-                    </select>
-                </div>
-                <div class="settings-group">
-                    <label for="temperature">温度 (0-1):</label>
-                    <input type="range" 
-                           id="temperature" 
-                           min="0" 
-                           max="1" 
-                           step="0.1" 
-                           value="0.7"
-                           aria-valuemin="0"
-                           aria-valuemax="1"
-                           aria-valuenow="0.7">
-                    <span id="temperatureValue" aria-hidden="true">0.7</span>
-                </div>
-                <div class="settings-group">
-                    <label for="maxTokens">最大输出长度:</label>
-                    <input type="number" 
-                           id="maxTokens" 
-                           value="4096" 
-                           min="1" 
-                           max="8192"
-                           required>
-                </div>
-                <div class="settings-group">
-                    <label for="contextLength">上下文长度:</label>
-                    <input type="number" 
-                           id="contextLength" 
-                           value="10" 
-                           min="1" 
-                           max="50"
-                           required>
-                </div>
-                <div class="button-group">
-                    <button type="submit" id="saveSettings">保存设置</button>
-                    <button type="button" id="closeSettings">取消</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- 依赖库 - 使用CDN加载 -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.0/marked.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-cpp.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js" defer></script>
-    
-    <!-- 应用代码 -->
-    <script type="module" src="js/main.js" defer></script>
-</body>
+        <!-- 依赖脚本 -->
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+        <script src="js/main.js" type="module"></script>
+    </body>
 </html>
 <!-- 
  * 版权所有 © 2025 XGOUO.CN

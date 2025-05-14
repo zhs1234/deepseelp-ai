@@ -1,6 +1,21 @@
-# DeepSeek AI对话助手
+# DeepSeek AI 助手
 
-> 一个优雅的AI对话助手，支持智能对话、代码高亮和Markdown渲染。
+## 开发环境搭建
+
+1. 安装 [Node.js LTS 版本](https://nodejs.org/zh-cn/download/)
+2. 安装 HTTP 服务器：
+```bash
+npm install -g http-server
+```
+3. 启动开发服务器：
+```bash
+http-server -o
+```
+
+## 使用说明
+
+- 访问 `http://localhost:8080` 查看应用
+- 修改前端文件后刷新页面即可生效
 
 ## 🌟 核心功能
 

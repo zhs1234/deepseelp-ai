@@ -4,33 +4,164 @@
  * 联系方式：QQ-56161944
  */
 
-/* 布局样式 */
+/* 侧边栏样式 */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 999;
+}
+
+.sidebar-title {
+    font-size: 1.2em;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* 修改导航按钮样式 */
+.nav-button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    transition: all var(--transition-time);
+    color: black;
+    text-decoration: none;
+}
+
+.nav-button:hover {
+    background-color: #f0f2f5;
+}
+
+/* 更新导航栏激活状态样式 */
+.nav-button.active {
+    background-color: #e6f7ff;
+    font-weight: 500;
+    color: black;
+}
+
+/* 修改主容器样式 */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    gap: 24px;
+    position: relative;
+}
+
+/* 统一主内容容器样式 */
+.main-content {
+    margin-left: 200px;
+    padding: 24px;
+    width: calc(100% - 200px);
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    transition: margin-right 0.3s ease;
+}
+
+/* 右侧边栏样式 */
+.right-sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 350px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    z-index: 100;
+}
+
+.right-sidebar.collapsed {
+    transform: translateX(100%);
+}
+
+.right-sidebar.expanded ~ .main-content {
+    margin-right: 350px;
+}
+
+.settings-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-header {
+    padding: 15px;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #666;
+}
+
+/* 内容容器样式 */
+.content-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 移除.chat-container特定样式 */
+.chat-container {
+    width: 100%;
+    padding: 0;
+    background-color: transparent;
+}
+
+/* 优化聊天容器样式 */
 .chat-container {
     background-color: white;
     border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     padding: 24px;
+    flex: 1;
     height: 85vh;
     display: flex;
     flex-direction: column;
     transition: all var(--transition-time);
-    position: relative;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none; /* 移除阴影 */
+    border: none; /* 移除边框 */
 }
 
-.chat-container:hover {
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-}
-
+/* 统一头部样式 */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #f0f2f5;
-    position: relative;
+    margin-bottom: 24px;
+    padding: 0;
 }
 
 .header::after {
@@ -110,6 +241,11 @@
     width: 100px;
 }
 
+/* 移除设置表单位于.chat-container的特定样式 */
+.chat-container .settings-form {
+    padding: 0;
+}
+
 /* 空状态样式 */
 .chat-messages:empty::before {
     content: '暂无消息记录';
@@ -155,8 +291,16 @@
 #sendButton:active {
     transform: scale(0.98);
 }
-/* 
- * 版权所有 © 2025 XGOUO.CN
- * 保留所有权利
- * 联系方式：QQ-56161944
- */
+
+/* 调整按钮组位置 */
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+/* 恢复设置按钮显示 */
+#settingsButton {
+    display: inline-block;
+}
