@@ -19,6 +19,7 @@
             <nav class="sidebar-nav">
                 <a href="index.html" class="nav-button">对话助手</a>
                 <a href="knowledge.html" class="nav-button active">知识库</a>
+                <a href="ai-mask.html" class="nav-button">AI面具</a>
                 <a href="settings.html" class="nav-button">设置</a>
             </nav>
         </aside>
@@ -31,10 +32,10 @@
 
             <div class="content-container">
                 <div class="search-bar">
-                    <input type="text" placeholder="搜索知识库...">
+                    <input type="text" id="knowledgeSearch" placeholder="搜索知识库..." aria-label="知识搜索">
                 </div>
 
-                <div class="knowledge-list">
+                <div id="knowledgeList" class="knowledge-list">
                     <div class="knowledge-item">
                         <h3>常见问题解答</h3>
                         <p>关于DeepSeek AI助手的常见问题解答文档</p>
@@ -49,6 +50,6 @@
     </div>
 
     <!-- 依赖脚本 -->
-    <script src="js/main.js" type="module"></script>
+    <script src="js/knowledge.js" type="module"></script>
 </body>
 </html>

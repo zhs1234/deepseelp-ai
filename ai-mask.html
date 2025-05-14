@@ -1,0 +1,62 @@
+<!-- 
+ * 版权所有 © 2025 XGOUO.CN
+ * 保留所有权利
+ * 联系方式：QQ-56161944
+ -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="DeepSeek AI面具 - 智能AI角色扮演">
+    <meta name="theme-color" content="#1890ff">
+    <title>AI面具 - DeepSeek</title>
+    
+    <!-- CSS文件 -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏导航 -->
+        <aside class="sidebar">
+            <h2 class="sidebar-title">DeepSeek AI</h2>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-button">对话助手</a>
+                <a href="knowledge.html" class="nav-button">知识库</a>
+                <a href="ai-mask.html" class="nav-button active">AI面具</a>
+                <a href="settings.html" class="nav-button">设置</a>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <div class="content-container">
+            <header class="header">
+                <h1>AI面具</h1>
+                <p class="subtitle">选择角色身份，开启智能对话</p>
+            </header>
+
+            <div class="instructions">
+                <h3>使用说明</h3>
+                <p>1. 点击下方角色卡片的"复制提示词"按钮</p>
+                <p>2. 返回聊天页面粘贴到输入框</p>
+                <p>3. 发送后AI将按照选定角色风格回复</p>
+            </div>
+
+            <div id="maskContainer" class="mask-container">
+                <!-- 面具列表将通过JS动态加载 -->
+                <div class="loading-indicator">
+                    <div class="spinner"></div>
+                    <span>正在加载AI角色...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript文件 -->
+    <script src="js/ai-mask.js" type="module"></script>
+</body>
+</html>

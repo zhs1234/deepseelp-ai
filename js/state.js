@@ -1,10 +1,13 @@
-import { CONFIG } from './config.js';
-import { MessageType } from './types.js';
-
-/**
- * 聊天状态管理类
+/* 
+ * 版权所有 © 2025 XGOUO.CN
+ * 保留所有权利
+ * 联系方式：QQ-56161944
  */
-export class ChatState {
+
+import { CONFIG } from './config.js';
+
+// 应用状态管理
+class AppState {
     constructor() {
         this.history = [];
         this.isLoading = false;
@@ -18,25 +21,33 @@ export class ChatState {
      */
     loadSettings() {
         try {
-            const saved = localStorage.getItem(CONFIG.STORAGE_KEYS.SETTINGS);
-            return saved ? JSON.parse(saved) : CONFIG.DEFAULT_SETTINGS;
+            const savedSettings = localStorage.getItem('deepseekSettings');
+            const defaultSettings = CONFIG.DEFAULT_SETTINGS;
+
+            if (!savedSettings) {
+                return defaultSettings;
+            }
+
+            const parsedSettings = JSON.parse(savedSettings);
+            return { ...defaultSettings, ...parsedSettings };
         } catch (error) {
-            console.error('Failed to load settings:', error);
+            console.error('加载设置失败:', error);
             return CONFIG.DEFAULT_SETTINGS;
         }
     }
 
     /**
      * 保存设置
-     * @param {Object} settings 要保存的设置
+     * @param {Object} newSettings 新设置
      */
-    saveSettings(settings) {
+    saveSettings(newSettings) {
         try {
-            localStorage.setItem(CONFIG.STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
-            this.settings = settings;
+            this.settings = { ...this.settings, ...newSettings };
+            localStorage.setItem('deepseekSettings', JSON.stringify(this.settings));
+            return true;
         } catch (error) {
-            console.error('Failed to save settings:', error);
-            throw new Error('设置保存失败');
+            console.error('保存设置失败:', error);
+            return false;
         }
     }
 
@@ -45,24 +56,9 @@ export class ChatState {
      * @param {Object} message 消息对象
      */
     addMessage(message) {
-        this.history.push({
-            ...message,
-            timestamp: new Date().toISOString()
-        });
-        this.trimHistory();
-    }
-
-    /**
-     * 清空历史记录
-     */
-    clearHistory() {
-        this.history = [];
-    }
-
-    /**
-     * 裁剪历史记录到指定长度
-     */
-    trimHistory() {
+        this.history.push(message);
+        
+        // 保持历史记录在上下文长度范围内
         if (this.history.length > this.settings.contextLength * 2) {
             this.history = this.history.slice(-this.settings.contextLength * 2);
         }
@@ -77,15 +73,22 @@ export class ChatState {
     }
 
     /**
-     * 设置加载状态
-     * @param {boolean} loading 是否正在加载
+     * 清空历史记录
      */
-    setLoading(loading) {
-        this.isLoading = loading;
+    clearHistory() {
+        this.history = [];
     }
 
     /**
-     * 设置错误信息
+     * 设置加载状态
+     * @param {boolean} isLoading 是否加载中
+     */
+    setLoading(isLoading) {
+        this.isLoading = isLoading;
+    }
+
+    /**
+     * 设置错误状态
      * @param {string|null} error 错误信息
      */
     setError(error) {
@@ -93,5 +96,5 @@ export class ChatState {
     }
 }
 
-// 创建并导出状态实例
-export const state = new ChatState();
+// 创建并导出单例
+export const state = new AppState();

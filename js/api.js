@@ -1,6 +1,12 @@
+/* 
+ * 版权所有 © 2025 XGOUO.CN
+ * 保留所有权利
+ * 联系方式：QQ-56161944
+ */
+
 import { MessageType, ErrorType } from './types.js';
 import { state } from './state.js';
-import { addMessage } from './dom.js';
+import { els } from './dom.js';
 
 /**
  * 获取错误消息
@@ -19,9 +25,40 @@ const getErrorMessage = (error) => {
 };
 
 /**
+ * 添加消息到聊天界面
+ * @param {string} content - 消息内容
+ * @param {MessageType} type - 消息类型（用户/AI）
+ * @returns {HTMLElement} 创建的消息元素
+ */
+function addMessage(content, type) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type === MessageType.USER ? 'user-message' : 'ai-message'}`;
+    messageDiv.setAttribute('role', 'article');
+    
+    if (type === MessageType.USER) {
+        messageDiv.textContent = content;
+    } else {
+        // 使用marked处理AI消息中的markdown
+        messageDiv.innerHTML = marked.parse(content);
+        
+        // 处理代码块语法高亮
+        messageDiv.querySelectorAll('pre code').forEach((block) => {
+            Prism.highlightElement(block);
+        });
+    }
+    
+    els.chatMessages.appendChild(messageDiv);
+    els.chatMessages.scrollTop = els.chatMessages.scrollHeight;
+    
+    // 保存到历史记录
+    state.addMessage({ content, type });
+    
+    return messageDiv;
+}
+
+/**
  * 处理API错误
  * @param {Error} error 错误对象
- * @param {HTMLElement} loadingMessage 加载消息元素
  */
 const handleApiError = (error) => {
     console.error('API Error:', error);
@@ -49,8 +86,7 @@ export const sendMessage = async (message) => {
     
     try {
         const loadingMessage = addMessage('正在思考...', MessageType.AI);
-        state.addMessage({ type: MessageType.USER, content: message });
-
+        
         const response = await fetch(state.settings.apiEndpoint, {
             method: 'POST',
             headers: {
@@ -64,7 +100,7 @@ export const sendMessage = async (message) => {
                     content: msg.content
                 })),
                 temperature: state.settings.temperature,
-                max_tokens: state.settings.maxTokens
+                max_tokens: state.settings.maxTokens || 4096
             })
         });
 
@@ -84,7 +120,6 @@ export const sendMessage = async (message) => {
         }
 
         const aiMessage = data.choices[0].message.content;
-        state.addMessage({ type: MessageType.AI, content: aiMessage });
         addMessage(aiMessage, MessageType.AI);
 
     } catch (error) {
@@ -93,3 +128,5 @@ export const sendMessage = async (message) => {
         state.setLoading(false);
     }
 };
+
+export { addMessage };

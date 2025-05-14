@@ -1,88 +1,18 @@
+/* 
+ * 版权所有 © 2025 XGOUO.CN
+ * 保留所有权利
+ * 联系方式：QQ-56161944
+ */
 
 import { MessageType } from './types.js';
 
-/**
- * DOM元素引用
- */
-let elements = null;
+// 存储DOM元素引用
+export const els = {};
 
-// 定义必需和可选元素列表
+// 定义必需元素列表
 const REQUIRED_ELEMENTS = [
-    'chatMessages', 'userInput', 'sendButton', 'settingsButton', 
-    'settingsPanel', 'saveSettings', 'closeSettings', 'exportButton', 
-    'clearButton'
+    'chatMessages', 'userInput', 'sendButton', 'exportButton', 'clearButton'
 ];
-
-const OPTIONAL_ELEMENTS = [
-    'temperatureInput', 'temperatureValue', 'apiEndpoint', 'apiKey', 
-    'modelName', 'maxTokens', 'contextLength'
-];
-
-/**
- * 初始化DOM元素引用
- */
-export const initializeElements = () => {
-    // 初始化必需元素
-    const requiredElements = {};
-    for (const elementName of REQUIRED_ELEMENTS) {
-        const element = document.getElementById(elementName);
-        if (!element) {
-            throw new Error(`Required DOM element "${elementName}" not found`);
-        }
-        requiredElements[elementName] = element;
-    }
-    
-    // 初始化可选元素
-    const optionalElements = {};
-    for (const elementName of OPTIONAL_ELEMENTS) {
-        const element = document.getElementById(elementName);
-        if (element) {
-            optionalElements[elementName] = element;
-        }
-    }
-    
-    // 合并必需和可选元素
-    elements = {
-        ...requiredElements,
-        ...optionalElements
-    };
-
-    return elements;
-};
-
-/**
- * 获取DOM元素引用
- */
-export const getElements = () => {
-    if (!elements) {
-        throw new Error('DOM elements not initialized. Call initializeElements() first.');
-    }
-    return elements;
-};
-
-/**
- * 添加消息到聊天界面
- * @param {string} content 消息内容
- * @param {string} type 消息类型（user/ai）
- * @returns {HTMLElement} 创建的消息元素
- */
-export const addMessage = (content, type) => {
-    const els = getElements();
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${type}-message`;
-    messageDiv.innerHTML = type === MessageType.USER ? content : marked.parse(content);
-    
-    if (type === MessageType.AI) {
-        messageDiv.querySelectorAll('pre code').forEach((block) => {
-            Prism.highlightElement(block);
-        });
-    }
-    
-    els.chatMessages.appendChild(messageDiv);
-    els.chatMessages.scrollTop = els.chatMessages.scrollHeight;
-    
-    return messageDiv;
-};
 
 // 存储事件监听器引用，用于后续解绑
 const eventListeners = new Map();
@@ -94,79 +24,114 @@ const eventListeners = new Map();
  * @param {Function} handler 事件处理函数
  */
 const addEventListenerWithRef = (element, eventType, handler) => {
-    if (!element) return;
+    if (!element || !element.addEventListener) {
+        console.error('无效的DOM元素或缺少addEventListener方法', element);
+        return;
+    }
     
-    element.addEventListener(eventType, handler);
-    
-    // 存储事件监听器引用
-    const elementListeners = eventListeners.get(element) || new Map();
-    elementListeners.set(eventType, handler);
-    eventListeners.set(element, elementListeners);
+    try {
+        element.addEventListener(eventType, handler);
+        
+        // 存储事件监听器引用
+        const elementListeners = eventListeners.get(element) || new Map();
+        elementListeners.set(eventType, handler);
+        eventListeners.set(element, elementListeners);
+        
+        console.log(`成功绑定事件监听器: ${eventType} 到元素`, element);
+    } catch (error) {
+        console.error('绑定事件监听器失败:', error);
+    }
 };
+
+/**
+ * 初始化DOM元素引用
+ * @throws {Error} 如果找不到必需的元素
+ */
+export function initializeDOMElements() {
+    console.log('正在初始化DOM元素...');
+    
+    // 获取必需元素
+    REQUIRED_ELEMENTS.forEach(id => {
+        const element = document.getElementById(id);
+        if (!element) {
+            const errMsg = `Required element #${id} not found`;
+            console.error(errMsg);
+            throw new Error(errMsg);
+        }
+        els[id] = element;
+        console.log(`已初始化元素: #${id}`, element);
+    });
+}
 
 /**
  * 设置DOM事件监听器
- * @param {Object} handlers 事件处理函数集合
+ * @param {Object} handlers - 包含事件处理函数的对象
  */
-export const setupDOMListeners = (handlers) => {
-    const els = getElements();
-    const { handleSend, handleSettingsSave, handleClear, handleExport } = handlers;
+export function setupDOMListeners(handlers) {
+    console.log('正在设置事件监听器...', handlers);
+    
+    const {
+        handleSendMessage,
+        handleExportChat,
+        handleClearChat
+    } = handlers;
+
+    // 验证元素存在
+    if (!els.sendButton || !els.userInput) {
+        console.error('关键元素未初始化', els);
+        return;
+    }
 
     // 发送消息事件
     addEventListenerWithRef(els.sendButton, 'click', (e) => {
+        console.log('发送按钮点击事件触发');
         e.preventDefault();
-        handleSend();
+        if (typeof handleSendMessage === 'function') {
+            handleSendMessage();
+        } else {
+            console.error('handleSendMessage不是函数', handleSendMessage);
+        }
+    });
+    
+    addEventListenerWithRef(els.userInput, 'keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            console.log('输入框回车事件触发');
+            e.preventDefault();
+            if (typeof handleSendMessage === 'function') {
+                handleSendMessage();
+            } else {
+                console.error('handleSendMessage不是函数', handleSendMessage);
+            }
+        }
     });
 
-    // 确保发送按钮在输入内容时可点击
-    addEventListenerWithRef(els.userInput, 'input', (e) => {
-        els.sendButton.disabled = !e.target.value.trim();
-    });
-
-    // 设置面板事件
-    addEventListenerWithRef(els.settingsButton, 'click', (e) => {
-        e.preventDefault();
-        els.settingsPanel.classList.add('active');
-    });
-
-    addEventListenerWithRef(els.closeSettings, 'click', (e) => {
-        e.preventDefault();
-        els.settingsPanel.classList.remove('active');
-    });
-
-    // 清空对话事件
-    addEventListenerWithRef(els.clearButton, 'click', (e) => {
-        e.preventDefault();
-        handleClear();
-    });
-
-    // 导出对话事件
+    // 导出聊天记录事件
     addEventListenerWithRef(els.exportButton, 'click', (e) => {
         e.preventDefault();
-        handleExport();
+        handleExportChat();
     });
 
-    // 移除温度滑块事件（已在settings.js中处理）
-
-    // 点击设置面板外部关闭设置
-    addEventListenerWithRef(document, 'click', (e) => {
-        if (e.target === els.settingsPanel) {
-            els.settingsPanel.classList.remove('active');
-        }
+    // 清空聊天记录事件
+    addEventListenerWithRef(els.clearButton, 'click', (e) => {
+        e.preventDefault();
+        handleClearChat();
     });
-};
+}
 
 /**
- * 移除DOM事件监听器
+ * 清理所有事件监听器
  */
-export const removeDOMListeners = () => {
-    // 遍历所有存储的事件监听器并移除
-    for (const [element, listeners] of eventListeners.entries()) {
-        for (const [eventType, handler] of listeners.entries()) {
-            element.removeEventListener(eventType, handler);
-        }
-    }
-    
-    // 清空事件监听器存储
+export function cleanup() {
+    console.log('正在清理事件监听器...');
+    eventListeners.forEach((listeners, element) => {
+        listeners.forEach((handler, eventType) => {
+            try {
+                element.removeEventListener(eventType, handler);
+                console.log(`已移除事件监听器: ${eventType} 从元素`, element);
+            } catch (error) {
+                console.error('移除事件监听器失败:', error);
+            }
+        });
+    });
     eventListeners.clear();
-};
+}
