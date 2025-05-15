@@ -1,4 +1,6 @@
 .
+├── favicon.ico       # 网站图标文件（浏览器标签页显示）
+├── js/state.js       # 应用状态管理（含消息持久化功能）
 ├── ai-mask.html       # AI面具功能页面（多角色切换系统）
 ├── index.html         # 网站主页面
 ├── knowledge.html     # 知识库展示页面
