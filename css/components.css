@@ -880,6 +880,77 @@ input[type="range"]::-webkit-slider-thumb:hover {
     }
 }
 
+/* 关于页面样式 */
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.about-section {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
+    transition: all var(--transition-time);
+}
+
+.about-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.about-section h1 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.about-section h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.about-description p,
+.team-info p,
+.contact-info p,
+.copyright-info p,
+.version-info p {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.contact-info p,
+.copyright-info p,
+.version-info p {
+    margin-bottom: 8px;
+}
+
+/* 关于页面暗色主题样式 */
+[data-theme="dark"] .about-section {
+    background-color: #2d2d2d;
+    border-color: #444;
+}
+
+[data-theme="dark"] .about-section h1,
+[data-theme="dark"] .about-section h2 {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .about-description p,
+[data-theme="dark"] .team-info p,
+[data-theme="dark"] .contact-info p,
+[data-theme="dark"] .copyright-info p,
+[data-theme="dark"] .version-info p {
+    color: #f0f0f0;
+}
+
 /* 知识库页面样式 */
 .content-container {
     padding: 20px;

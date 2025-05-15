@@ -93,14 +93,24 @@ export function setupDOMListeners(handlers) {
         }
     });
     
-    addEventListenerWithRef(els.userInput, 'keypress', (e) => {
+    // 增强的输入框事件处理
+    addEventListenerWithRef(els.userInput, 'keydown', (e) => {
+        console.log('键盘事件触发:', e.key, 'shiftKey:', e.shiftKey);
+        
         if (e.key === 'Enter' && !e.shiftKey) {
-            console.log('输入框回车事件触发');
+            console.log('回车键按下，准备发送消息');
             e.preventDefault();
-            if (typeof handleSendMessage === 'function') {
-                handleSendMessage();
-            } else {
-                console.error('handleSendMessage不是函数', handleSendMessage);
+            e.stopPropagation();
+            
+            try {
+                if (typeof handleSendMessage === 'function') {
+                    console.log('调用handleSendMessage');
+                    handleSendMessage();
+                } else {
+                    console.error('handleSendMessage不是函数', handleSendMessage);
+                }
+            } catch (error) {
+                console.error('处理回车键事件时出错:', error);
             }
         }
     });

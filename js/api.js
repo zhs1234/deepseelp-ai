@@ -114,6 +114,13 @@ export const sendMessage = async (message) => {
 
         const data = await response.json();
         loadingMessage.remove();
+        
+        // 从历史记录中移除"正在思考..."消息
+        const history = state.getHistory();
+        const lastMessage = history[history.length - 1];
+        if (lastMessage && lastMessage.content === '正在思考...') {
+            state.removeLastMessage();
+        }
 
         if (!data.choices || data.choices.length === 0) {
             throw new Error(ErrorType.INVALID_RESPONSE);

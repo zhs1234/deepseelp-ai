@@ -82,6 +82,48 @@ const handleExportChat = () => {
 };
 
 /**
+ * 显示历史消息记录
+ */
+const displayHistory = () => {
+    try {
+        const history = state.getHistory();
+        if (history && history.length > 0) {
+            // 清空默认的欢迎消息
+            els.chatMessages.innerHTML = '';
+            // 显示历史消息
+            history.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${msg.type === MessageType.USER ? 'user-message' : 'ai-message'}`;
+                messageDiv.setAttribute('role', 'article');
+                
+                if (msg.type === MessageType.USER) {
+                    messageDiv.textContent = msg.content;
+                } else {
+                    // 检查marked是否已加载
+                    if (typeof marked !== 'undefined') {
+                        messageDiv.innerHTML = marked.parse(msg.content);
+                        // 检查Prism是否已加载
+                        if (typeof Prism !== 'undefined') {
+                            messageDiv.querySelectorAll('pre code').forEach((block) => {
+                                Prism.highlightElement(block);
+                            });
+                        }
+                    } else {
+                        // 如果marked未加载，直接显示内容
+                        messageDiv.textContent = msg.content;
+                    }
+                }
+                
+                els.chatMessages.appendChild(messageDiv);
+            });
+            els.chatMessages.scrollTop = els.chatMessages.scrollHeight;
+        }
+    } catch (error) {
+        console.error('显示历史记录失败:', error);
+    }
+};
+
+/**
  * 初始化应用
  */
 const initializeApp = () => {
@@ -102,6 +144,12 @@ const initializeApp = () => {
         
         setupDOMListeners(handlers);
         console.log('事件监听器设置完成');
+        
+        // 确保DOM完全加载后再显示历史消息记录
+        setTimeout(() => {
+            displayHistory();
+            console.log('历史消息记录显示完成');
+        }, 100);
 
         // 禁用输入框的默认Enter行为
         if (els.userInput) {
