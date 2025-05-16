@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="关于DeepSeek AI - 了解我们的项目">
     <meta name="theme-color" content="#1890ff">
-    <title>关于 - DeepSeek</title>
+    <title>关于</title>
     
     <!-- 预加载关键资源 -->
     <link rel="preload" href="css/base.css" as="style" crossorigin>
@@ -42,43 +42,103 @@
         <!-- 关于页面主要内容区域 -->
         <div class="chat-container" role="main">
             <div class="about-content">
-                <section class="about-section">
+                <section class="about-section intro-section">
                     <h1>关于DeepSeek AI</h1>
                     <div class="about-description">
-                        <p>这是我的HTML结课作业，我能写关于什么呢？？？？</p>
+                        <p>DeepSeek AI 是一个结课作业</p>
+                        <div class="feature-list">
+                            <!-- 功能卡片已移除 -->
+                        </div>
                     </div>
                 </section>
 
-                <section class="about-section">
-                    <h2>开发团队</h2>
-                    <div class="team-info">
-                        <p>由XGOUO开发和维护</p>
+                <section class="about-section collapsible-section">
+                    <h2 class="collapsible-header">开发历程 <span class="toggle-icon">+</span></h2>
+                    <div class="collapsible-content">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">2025.03</div>
+                                <div class="timeline-content">
+                                    <h3>项目启动</h3>
+                                    <p>完成核心架构设计和基础功能开发</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2025.04</div>
+                                <div class="timeline-content">
+                                    <h3>Beta版本发布</h3>
+                                    <p>推出首个公开测试版本</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">2025.05</div>
+                                <div class="timeline-content">
+                                    <h3>1.0正式版</h3>
+                                    <p>发布稳定版本，新增多项功能</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                <section class="about-section">
+                <section class="about-section collapsible-section">
+                    <h2 class="collapsible-header">开发团队 <span class="toggle-icon">+</span></h2>
+                    <div class="collapsible-content">
+                        <div class="team-info">
+                            <div class="team-card">
+                                <h3>XGOUO</h3>
+                                <p>全栈开发者</p>
+                                <p>负责项目架构和核心功能开发</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="about-section contact-section">
                     <h2>联系我们</h2>
                     <div class="contact-info">
-                        <p>QQ：56161944</p>
-                        <p>微信：yanyu_0987</p>
+                        <div class="contact-method">
+                            <i class="icon-qq"></i>
+                            <span>QQ：56161944</span>
+                        </div>
+                        <div class="contact-method">
+                            <i class="icon-wechat"></i>
+                            <span>微信：yanyu_0987</span>
+                        </div>
+                        <div class="contact-method">
+                            <i class="icon-email"></i>
+                            <span>邮箱：56161944@qq.com</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">GitHub</a>
                     </div>
                 </section>
 
-                <section class="about-section">
-                    <h2>版权信息</h2>
+                <section class="about-section copyright-section">
+                    <h2>版权声明</h2>
                     <div class="copyright-info">
-                        <p>版权所有 © 2025 XGOUO.CN</p>
-                        <p>保留所有权利</p>
-                    </div>
-                </section>
-
-                <section class="about-section">
-                    <h2>版本信息</h2>
-                    <div class="version-info">
-                        <p>当前版本：1.0</p>
+                        <p>© 2025 XGOUO.CN 版权所有</p>
+                        <p>结课作业写成这样会不会太超标，</p>
+                        <p>未经许可不得用于商业用途（谁会拿一个大专结课作业用于商业呢？）</p>
                     </div>
                 </section>
             </div>
+
+            <script>
+                // 折叠/展开功能
+                document.querySelectorAll('.collapsible-header').forEach(header => {
+                    header.addEventListener('click', () => {
+                        const section = header.parentElement;
+                        const content = header.nextElementSibling;
+                        const icon = header.querySelector('.toggle-icon');
+                        
+                        section.classList.toggle('expanded');
+                        content.style.display = section.classList.contains('expanded') ? 'block' : 'none';
+                        icon.textContent = section.classList.contains('expanded') ? '-' : '+';
+                    });
+                });
+            </script>
         </div>
 
         <!-- 依赖脚本 -->
