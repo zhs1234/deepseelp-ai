@@ -1,4 +1,4 @@
-# DeepSeek AI 助手
+# DeepSeelp AI 助手
 
 ## 🌟 核心功能
 

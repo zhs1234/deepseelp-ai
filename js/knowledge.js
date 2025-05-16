@@ -82,7 +82,7 @@ async function loadKnowledgeData() {
             {
                 id: 1,
                 title: '常见问题解答',
-                content: '关于DeepSeek AI助手的常见问题解答文档，包含安装、使用和故障排除等问题。',
+                content: '关于DeepSeelp AI助手的常见问题解答文档，包含安装、使用和故障排除等问题。',
                 category: '帮助文档',
                 tags: ['FAQ', '帮助'],
                 createdAt: '2023-06-15'
@@ -90,7 +90,7 @@ async function loadKnowledgeData() {
             {
                 id: 2,
                 title: 'API使用指南',
-                content: 'DeepSeek API接口详细使用说明和示例代码，包含认证、请求格式和响应处理。',
+                content: 'DeepSeelp API接口详细使用说明和示例代码，包含认证、请求格式和响应处理。',
                 category: '开发文档',
                 tags: ['API', '开发'],
                 createdAt: '2023-05-10'
@@ -98,7 +98,7 @@ async function loadKnowledgeData() {
             {
                 id: 3,
                 title: '快速入门',
-                content: 'DeepSeek AI助手的快速入门指南，帮助新用户快速上手使用。',
+                content: 'DeepSeelp AI助手的快速入门指南，帮助新用户快速上手使用。',
                 category: '帮助文档',
                 tags: ['入门', '指南'],
                 createdAt: '2023-07-20'
@@ -106,7 +106,7 @@ async function loadKnowledgeData() {
             {
                 id: 4,
                 title: '高级功能',
-                content: 'DeepSeek AI助手的高级功能使用说明，包含自定义设置和扩展功能。',
+                content: 'DeepSeelp AI助手的高级功能使用说明，包含自定义设置和扩展功能。',
                 category: '高级文档',
                 tags: ['高级', '功能'],
                 createdAt: '2023-08-05'

@@ -49,7 +49,7 @@ const handleClearChat = () => {
     if (confirm('确定要清空所有对话吗？')) {
         try {
             state.clearHistory();
-            els.chatMessages.innerHTML = '<div class="message ai-message">您好！我是DeepSeek AI助手，有什么可以帮您的？</div>';
+            els.chatMessages.innerHTML = '<div class="message ai-message">您好！我是DeepSeelp AI助手，有什么可以帮您的？</div>';
         } catch (error) {
             console.error('清空对话失败:', error);
             alert('清空对话失败：' + error.message);
