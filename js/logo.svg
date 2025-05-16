@@ -1,0 +1,11 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#4A90E2" />
+            <stop offset="100%" stop-color="#9B59B6" />
+        </linearGradient>
+    </defs>
+    <circle cx="100" cy="100" r="90" fill="none" stroke="url(#logoGradient)" stroke-width="10" />
+    <path d="M65,80 L65,120 L100,140 L135,120 L135,80 L100,60 Z" fill="none" stroke="url(#logoGradient)" stroke-width="6" />
+    <circle cx="100" cy="100" r="20" fill="url(#logoGradient)" />
+</svg>

@@ -6,23 +6,63 @@
 
 /* 基础样式 */
 :root {
+    /* 主要颜色 */
     --primary-color: #1890ff;
+    --primary-rgb: 24, 144, 255;
     --hover-color: #40a9ff;
     --disabled-color: #bae7ff;
-    --text-color: #333;
+    --accent-color: #9B59B6;
+    
+    /* 文本颜色 */
+    --text-primary: #333;
+    --text-secondary: #666;
+    --text-color: var(--text-primary);
+    
+    /* 边框和背景 */
     --border-color: #e0e0e0;
     --bg-color: #f0f2f5;
+    --bg-gradient-start: #f8f9fa;
+    --bg-gradient-end: #e9ecef;
+    
+    /* 动画和过渡 */
     --transition-time: 0.3s;
+    --animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* 阴影效果 */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+    
+    /* 圆角 */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 16px;
+    --border-radius-full: 9999px;
 }
 
 /* 暗黑模式 */
 [data-theme="dark"] {
+    /* 主要颜色 */
     --primary-color: #1890ff;
     --hover-color: #40a9ff;
     --disabled-color: #003a8c;
-    --text-color: #f0f0f0;
+    --accent-color: #9B59B6;
+    
+    /* 文本颜色 */
+    --text-primary: #f0f0f0;
+    --text-secondary: #aaa;
+    --text-color: var(--text-primary);
+    
+    /* 边框和背景 */
     --border-color: #444;
     --bg-color: #1a1a1a;
+    --bg-gradient-start: #2c3e50;
+    --bg-gradient-end: #1a1a2e;
+    
+    /* 阴影效果 - 暗色模式下更柔和 */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-track {
@@ -49,6 +89,8 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
+    transition: background-color var(--transition-time) var(--animation-timing),
+                color var(--transition-time) var(--animation-timing);
 }
 
 button {
@@ -56,22 +98,22 @@ button {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 25px;
+    border-radius: var(--border-radius-full);
     cursor: pointer;
     font-size: 14px;
-    transition: all var(--transition-time) ease;
-    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+    transition: all var(--transition-time) var(--animation-timing);
+    box-shadow: var(--shadow-sm);
 }
 
 button:hover {
     background-color: var(--hover-color);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(24, 144, 255, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
 button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+    box-shadow: var(--shadow-sm);
 }
 
 button:disabled {
@@ -85,15 +127,17 @@ input {
     flex: 1;
     padding: 12px 16px;
     border: 2px solid var(--border-color);
-    border-radius: 25px;
+    border-radius: var(--border-radius-full);
     outline: none;
     font-size: 14px;
-    transition: all var(--transition-time) ease;
+    transition: all var(--transition-time) var(--animation-timing);
+    background-color: transparent;
+    color: var(--text-color);
 }
 
 input:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(24,144,255,0.1);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
 }
 
 /* 滚动条美化 */
@@ -104,12 +148,12 @@ input:focus {
 
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 4px;
+    border-radius: var(--border-radius-sm);
 }
 
 ::-webkit-scrollbar-thumb {
     background: #ccc;
-    border-radius: 4px;
+    border-radius: var(--border-radius-sm);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -118,11 +162,85 @@ input:focus {
 
 /* 文本选择样式 */
 ::selection {
-    background: rgba(24, 144, 255, 0.2);
+    background: rgba(var(--primary-rgb), 0.2);
     color: var(--text-color);
 }
-/* 
- * 版权所有 © 2025 XGOUO.CN
- * 保留所有权利
- * 联系方式：QQ-56161944
- */
+
+/* 导航栏样式 */
+.navigation ul li a.active {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* 倒计时样式 */
+.countdown-text {
+    font-size: 1.2em;
+    color: var(--accent-color);
+    margin-top: 1rem;
+    transition: color var(--transition-time) var(--animation-timing);
+}
+
+/* 按钮悬停动画 */
+.animate-on-hover {
+    transition: transform var(--transition-time) var(--animation-timing),
+                box-shadow var(--transition-time) var(--animation-timing);
+}
+
+.animate-on-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* 紧急状态样式 */
+.cta-buttons.urgent .btn {
+    animation: shake 0.8s infinite;
+    background-color: var(--accent-color) !important;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* 页脚样式 */
+.site-footer {
+    margin-top: 3rem;
+    padding: 2rem 0;
+    background-color: var(--bg-gradient-start);
+    text-align: center;
+    transition: background-color var(--transition-time) var(--animation-timing);
+}
+
+/* 无障碍焦点样式 */
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    button {
+        padding: 10px 20px;
+    }
+
+    input {
+        padding: 10px 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .countdown-text {
+        font-size: 1em;
+    }
+}
