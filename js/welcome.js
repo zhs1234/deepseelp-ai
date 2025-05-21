@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 增强的倒计时逻辑
-let countdown = 5;
+let countdown = 10;
 const countdownElement = document.getElementById('countdown');
 const ctaButton = document.querySelector('.cta-buttons');
 
